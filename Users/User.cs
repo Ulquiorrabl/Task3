@@ -9,15 +9,15 @@ namespace Task3.Users
 {
     class User
     {
-        string name;
-        string surname;
-        ITerminal terminal;
+        public string Name { get; private set; }
+        public string Surname { get; private set; }
+        public ITerminal Terminal { get; private set; }
 
         public User(string name, string surname, ITerminal terminal = null)
         {
-            this.name = name;
-            this.surname = surname;
-            this.terminal = terminal;
+            this.Name = name;
+            this.Surname = surname;
+            this.Terminal = terminal;
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Task3.Regions
+namespace Task3.ATS.Regions
 {
     enum Region
     {
