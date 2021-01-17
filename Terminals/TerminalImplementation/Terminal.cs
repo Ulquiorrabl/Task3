@@ -21,7 +21,16 @@ namespace Task3.Terminals.TerminalImplementation
 
         public TerminalStatus Call(string number)
         {
-            throw new NotImplementedException();
+            if(Status == TerminalStatus.PowerOn)
+            {
+                port.ConnectToNumber(number);
+                return TerminalStatus.OperationSuccess;
+            }
+            else
+            {
+                return TerminalStatus.PowerOff;
+            }
+            
         }
 
         public TerminalStatus Decline()
@@ -48,15 +57,28 @@ namespace Task3.Terminals.TerminalImplementation
 
         public TerminalStatus AddPort(IPort port)
         {
-            if(port != null)
+            if(Status == TerminalStatus.PowerOn)
             {
-                this.port = port;
-                return TerminalStatus.OperationSuccess;
+                if (port != null)
+                {
+                    this.port = port;
+                    this.port.IncomingCall += OnIncomingCall;
+                    return TerminalStatus.OperationSuccess;
+                }
+                else
+                {
+                    return TerminalStatus.OperationError;
+                }
             }
             else
             {
-                return TerminalStatus.OperationError;
+                return TerminalStatus.PowerOff;
             }
+        }
+
+        private void OnIncomingCall(object sender, string number)
+        {
+            Console.WriteLine("Terminal with port {0} incoming call from {1}", port.Number, number);
         }
     }
 }
