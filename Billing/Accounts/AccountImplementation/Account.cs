@@ -11,19 +11,22 @@ namespace Task3.Billing.Accounts.AccountImplementation
 {
     class Account : IAccount
     {
-        public float Balance { get; private set; }
+        public Balance AccountBalance { get; private set; }
 
-        public float Cost = 1.5f;
+        public float CostPerMinute = 1.5f;
 
         public AccountStatus Status { get; private set; }
 
         private AccountLog accountLog;
 
+        private bool isCallInitiator;
+
         IUser owner;
         public Account(IUser owner)
         {
             this.owner = owner;
-            this.Balance = 0;
+            this.isCallInitiator = false;
+            this.AccountBalance = new Balance();
             accountLog = new AccountLog();
             Status = AccountStatus.Deactivated;
             ActivateAccount();
@@ -33,8 +36,9 @@ namespace Task3.Billing.Accounts.AccountImplementation
         {
             if (owner.Terminal.Port != null)
             {
-                owner.Terminal.Port.Call += OutGoingCall;
+                owner.Terminal.Port.Call += OnOutGoingCall;
                 owner.Terminal.Port.IncomingCall += OnIncomingCall;
+                owner.Terminal.Port.CallEnded += OnCallEnded;
                 Status = AccountStatus.Activated;
                 return AccountStatus.Activated;
             }
@@ -53,23 +57,36 @@ namespace Task3.Billing.Accounts.AccountImplementation
         {
             if(sum > 0)
             {
-                Balance += sum;
+                AccountBalance.Add(sum);
             }
-            accountLog.AddLog("Founds added " + sum.ToString() + "$ " + DateTime.Now);
-            return "Current balance: " + Balance.ToString();
+            accountLog.AddLog(DateTime.Now + " Founds added " + sum.ToString() + "$ ");
+            return "Current balance: " + AccountBalance;
         }
 
-        void OutGoingCall(object sender, string number)
+        void OnOutGoingCall(object sender, string number)
         {
-            float cost = Cost;
-            Balance -= cost;
-            accountLog.AddLog("Call to " + number + " " + DateTime.Now);
-            accountLog.AddLog("Call cost: " + cost.ToString() + "$" + " Account Balance: " + Balance.ToString() + "$");
+            isCallInitiator = true;
+            accountLog.AddCallDate(DateTime.Now);
+            //accountLog.AddLog("Call to " + number + " " + DateTime.Now);
+            //accountLog.AddLog("Call cost: " + cost.ToString() + "$" + " Account Balance: " + Balance.ToString() + "$");
         }
 
         void OnIncomingCall(object sender, string number)
         {
-            accountLog.AddLog("Call from " + sender.ToString() + " " + DateTime.Now);
+            accountLog.AddLog(DateTime.Now + " Call from " + sender.ToString());
+        }
+
+        void OnCallEnded(object sender, string number)
+        {
+            if (isCallInitiator)
+            {
+                double diff = ((DateTime.Now - accountLog.LastInitiatedCallDate).TotalSeconds /60);
+                TimeSpan timeDiff = DateTime.Now - accountLog.LastInitiatedCallDate;
+                double totalCost = diff * CostPerMinute;
+                AccountBalance.Remove(diff * CostPerMinute);
+                accountLog.AddLog(accountLog.LastInitiatedCallDate + " Call to " + number + " lasted " + timeDiff + " Total cost: " + totalCost + "$" + " Balance: " + AccountBalance);
+                isCallInitiator = false;
+            }
         }
     }
 }

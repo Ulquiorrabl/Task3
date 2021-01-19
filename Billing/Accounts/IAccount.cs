@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Task3.Statuses;
+using Task3.Billing.Accounts.AccountImplementation;
 
 namespace Task3.Billing.Accounts
 {
     interface IAccount
     {
-        float Balance { get; }
+        Balance AccountBalance { get; }
         string AddFounds(float sum);
 
         string GetAccountLog();

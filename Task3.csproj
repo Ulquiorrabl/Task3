@@ -45,7 +45,8 @@
   <ItemGroup>
     <Compile Include="ATS\ATSReports\Report.cs" />
     <Compile Include="ATS\Station.cs" />
-    <Compile Include="ATS\StationStatus.cs" />
+    <Compile Include="Billing\Accounts\AccountImplementation\Balance.cs" />
+    <Compile Include="Statuses\StationStatus.cs" />
     <Compile Include="Billing\Accounts\AccountImplementation\Account.cs" />
     <Compile Include="Billing\Accounts\AccountLogs\AccountLog.cs" />
     <Compile Include="Billing\Accounts\IAccount.cs" />
