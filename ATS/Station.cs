@@ -5,18 +5,17 @@ using System.Text;
 using System.Threading.Tasks;
 using Task3.ATS.Ports;
 using Task3.ATS.Regions;
-using Task3.ATS.Reports;
-using Task3.Statuses;
+using Task3.ATS.ATSReports;
 
 namespace Task3.ATS
 {
-    class Stantion
+    class Station
     {
         private List<IPort> ports;
 
         public int NumOfPorts { get { return ports.Count; } }
         public StationStatus Status { get; private set; }
-        public Stantion()
+        public Station()
         {
             ports = new List<IPort>();
             Status = StationStatus.Online;
@@ -30,19 +29,19 @@ namespace Task3.ATS
             return port;
         }
 
-        public Report GetPortById(int id)
+        public ATSReport GetPortById(int id)
         {
             try
             {
-                return new Report(StationStatus.Online, ports[id], "Success");
+                return new ATSReport(StationStatus.Online, ports[id], "Success");
             }
             catch(Exception e)
             {
-                return new Report(StationStatus.Error, null, e.Message);
+                return new ATSReport(StationStatus.Error, null, e.Message);
             }
         }
 
-        public Report GetPortByNumber(string number)
+        public ATSReport GetPortByNumber(string number)
         {
             try
             {
@@ -50,14 +49,14 @@ namespace Task3.ATS
                 {
                     if(port.Number == number)
                     {
-                        return new Report(StationStatus.Online, port);
+                        return new ATSReport(StationStatus.Online, port);
                     }                  
                 }
-                return new Report(StationStatus.Error, null, "NotFound");
+                return new ATSReport(StationStatus.Error, null, "NotFound");
             }
             catch (Exception e)
             {
-                return new Report(StationStatus.Error, null, e.Message);
+                return new ATSReport(StationStatus.Error, null, e.Message);
             }
         }
 

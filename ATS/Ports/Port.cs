@@ -31,13 +31,16 @@ namespace Task3.ATS.Ports
         public void ConnectToNumber(string number)
         {
             Status = PortStatus.Busy;
+            Console.WriteLine("Call Invoked");
             Call?.Invoke(this, number);
         }
 
         public void ConnectedToPort(string number)
         {
+            Console.WriteLine("Incoming Call Invoked");
             Status = PortStatus.Busy;
             IncomingCall?.Invoke(this, number);
         }
+
     }
 }

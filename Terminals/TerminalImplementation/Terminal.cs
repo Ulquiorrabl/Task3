@@ -12,7 +12,7 @@ namespace Task3.Terminals.TerminalImplementation
     {
         public TerminalStatus Status { get; private set; }
 
-        private IPort port;
+        public IPort Port { get; private set; }
 
         public Terminal()
         {
@@ -23,7 +23,7 @@ namespace Task3.Terminals.TerminalImplementation
         {
             if(Status == TerminalStatus.PowerOn)
             {
-                port.ConnectToNumber(number);
+                Port.ConnectToNumber(number);
                 return TerminalStatus.OperationSuccess;
             }
             else
@@ -61,8 +61,8 @@ namespace Task3.Terminals.TerminalImplementation
             {
                 if (port != null)
                 {
-                    this.port = port;
-                    this.port.IncomingCall += OnIncomingCall;
+                    this.Port = port;
+                    this.Port.IncomingCall += OnIncomingCall;
                     return TerminalStatus.OperationSuccess;
                 }
                 else
@@ -78,7 +78,7 @@ namespace Task3.Terminals.TerminalImplementation
 
         private void OnIncomingCall(object sender, string number)
         {
-            Console.WriteLine("Terminal with port {0} incoming call from {1}", port.Number, number);
+            Console.WriteLine("Terminal with port {0} incoming call from {1}", Port.Number, number);
         }
     }
 }

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using Task3.Terminals;
 
-namespace Task3.Users
+namespace Task3.Users.UserImplementation
 {
-    class User
+    class User : IUser
     {
         public string Name { get; private set; }
         public string Surname { get; private set; }
