@@ -74,8 +74,11 @@ namespace Task3.ATS
 
         void ConnectPorts(object sender, string number)
         {
-            int firsPortId = IndexOfPort(number);
-            ports[firsPortId].ConnectedToPort(sender.ToString());
+            int firstPortId = IndexOfPort(number);
+            if (firstPortId != -1)
+            {
+                ports[firstPortId].ConnectedToPort(sender.ToString());
+            }
         }
 
     }

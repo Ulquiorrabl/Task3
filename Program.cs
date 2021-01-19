@@ -41,6 +41,21 @@ namespace Task3
             Console.WriteLine(acc2.Balance);
 
             Console.WriteLine(terminal1.Port.Status + " " + terminal2.Port.Status);
+
+            user1.Terminal.Decline();
+            user2.Terminal.Decline();
+
+            Console.WriteLine(terminal1.Port.Status);
+            Console.WriteLine(terminal2.Port.Status);
+
+            Console.WriteLine("");
+            Console.WriteLine("Output log1:");
+            Console.WriteLine(acc1.GetAccountLog());
+
+            Console.WriteLine("");
+            Console.WriteLine("Output log2:");
+            Console.WriteLine(acc2.GetAccountLog());
+
             Console.ReadKey();
         }
     }

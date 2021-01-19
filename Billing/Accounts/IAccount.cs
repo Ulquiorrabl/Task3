@@ -12,6 +12,7 @@ namespace Task3.Billing.Accounts
         float Balance { get; }
         string AddFounds(float sum);
 
+        string GetAccountLog();
         AccountStatus ActivateAccount();
         AccountStatus Status { get; }
     }

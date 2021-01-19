@@ -35,7 +35,15 @@ namespace Task3.Terminals.TerminalImplementation
 
         public TerminalStatus Decline()
         {
-            throw new NotImplementedException();
+            if (Status == TerminalStatus.PowerOn)
+            {
+                Port.EndCall();
+                return TerminalStatus.OperationSuccess;
+            }
+            else
+            {
+                return TerminalStatus.PowerOff;
+            }
         }
 
         public TerminalStatus Answer()

@@ -47,12 +47,14 @@
     <Compile Include="ATS\Station.cs" />
     <Compile Include="ATS\StationStatus.cs" />
     <Compile Include="Billing\Accounts\AccountImplementation\Account.cs" />
+    <Compile Include="Billing\Accounts\AccountLogs\AccountLog.cs" />
     <Compile Include="Billing\Accounts\IAccount.cs" />
     <Compile Include="ATS\Ports\IPort.cs" />
     <Compile Include="ATS\Ports\Port.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ATS\Regions\Region.cs" />
+    <Compile Include="Statuses\AccountLogStatus.cs" />
     <Compile Include="Statuses\AccountStatus.cs" />
     <Compile Include="Statuses\LogStatus.cs" />
     <Compile Include="Statuses\PortStatus.cs" />

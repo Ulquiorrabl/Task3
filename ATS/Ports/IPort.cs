@@ -16,8 +16,12 @@ namespace Task3.ATS.Ports
         void ConnectToNumber(string number);
         void ConnectedToPort(string number);
 
+        void EndCall();
+
         event EventHandler<string> IncomingCall;
 
         event EventHandler<string> Call;
+
+        event EventHandler CallEnded;
     }
 }

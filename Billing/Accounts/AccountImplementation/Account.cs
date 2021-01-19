@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Task3.Users;
 using Task3.Statuses;
+using Task3.Billing.Accounts.AccountLogs;
 
 namespace Task3.Billing.Accounts.AccountImplementation
 {
@@ -16,11 +17,14 @@ namespace Task3.Billing.Accounts.AccountImplementation
 
         public AccountStatus Status { get; private set; }
 
+        private AccountLog accountLog;
+
         IUser owner;
         public Account(IUser owner)
         {
             this.owner = owner;
             this.Balance = 0;
+            accountLog = new AccountLog();
             Status = AccountStatus.Deactivated;
             ActivateAccount();
         }
@@ -39,18 +43,27 @@ namespace Task3.Billing.Accounts.AccountImplementation
             }
         }
 
+        public string GetAccountLog()
+        {
+            return accountLog.ToString();
+        }
+
         public string AddFounds(float sum)
         {
             if(sum > 0)
             {
                 Balance += sum;
-            }         
+            }
+            accountLog.AddLog("Founds added " + sum.ToString() + "$ " + DateTime.Now);
             return "Current balance: " + Balance.ToString();
         }
 
         void OutGoingCall(object sender, string number)
         {
-            Balance -= 1.0f;
+            float cost = Cost;
+            Balance -= cost;
+            accountLog.AddLog("Call to " + number + " " + DateTime.Now);
+            accountLog.AddLog("Call cost: " + cost.ToString() + "$" + " Account Balance: " + Balance.ToString() + "$");
         }
     }
 }
