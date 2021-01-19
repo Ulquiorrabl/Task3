@@ -16,6 +16,7 @@ namespace Task3.Terminals
         TerminalStatus PowerOn();
         TerminalStatus PowerOff();
         TerminalStatus AddPort(IPort port);
+        TerminalStatus RemovePort();
 
         IPort Port { get; }
 

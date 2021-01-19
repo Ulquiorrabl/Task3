@@ -75,10 +75,19 @@ namespace Task3.ATS
 
         void ConnectPorts(object sender, string number)
         {
-            int firstPortId = IndexOfPort(number);
-            if (firstPortId != -1)
+            IPort firstPort = ports[IndexOfPort(sender.ToString())];
+            int secondPortId = IndexOfPort(number);
+            if (secondPortId != -1)
             {
-                ports[firstPortId].ConnectedToPort(sender.ToString());
+                IPort secondPort = ports[secondPortId];
+                if(firstPort.Region == secondPort.Region)
+                {
+                    secondPort.ConnectedToPort(firstPort.Number);
+                }
+                else
+                {
+                    firstPort.EndCall();
+                }
             }
         }
 

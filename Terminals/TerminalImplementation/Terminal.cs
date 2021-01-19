@@ -106,6 +106,12 @@ namespace Task3.Terminals.TerminalImplementation
             }
         }
 
+        public TerminalStatus RemovePort()
+        {
+            this.Port = null;
+            return TerminalStatus.OperationSuccess;
+        }
+
         private void OnIncomingCall(object sender, string number)
         {
             Console.WriteLine("Terminal with port {0} incoming call from {1}", Port.Number, number);

@@ -36,7 +36,7 @@ namespace Task3
             User user2 = new User("Kirill", "Nekrasov", terminal2);
             Account acc2 = new Account(user2);
             acc2.AddFounds(27);
-            user2.Terminal.AddPort(stantion.GeneratePort(Region.Region1, "+375291234567"));
+            user2.Terminal.AddPort(stantion.GeneratePort(Region.Region2, "+375291234567"));
             Console.WriteLine(acc2.ActivateAccount());
             Console.WriteLine("");
 
