@@ -10,7 +10,34 @@ namespace Task3.Terminals.TerminalImplementation
 {
     class Terminal : ITerminal
     {
-        public TerminalStatus Status { get; private set; }
+        private bool isOn;
+
+        public TerminalStatus Status
+        {
+            get
+            {
+                if (isOn)
+                {
+                    return TerminalStatus.PowerOn;
+                }
+                else
+                {
+                    return TerminalStatus.PowerOff;
+                }
+            }
+
+            private set
+            {
+                if(value == TerminalStatus.PowerOff)
+                {
+                    isOn = false;
+                }
+                else
+                {
+                    isOn = true;
+                }
+            }
+        }
 
         public IPort Port { get; private set; }
 
@@ -21,51 +48,46 @@ namespace Task3.Terminals.TerminalImplementation
 
         public TerminalStatus Call(string number)
         {
-            if(Status == TerminalStatus.PowerOn)
+            if(isOn)
             {
                 Port.ConnectToNumber(number);
                 return TerminalStatus.OperationSuccess;
             }
             else
             {
-                return TerminalStatus.PowerOff;
+                return Status;
             }
             
         }
 
         public TerminalStatus Decline()
         {
-            if (Status == TerminalStatus.PowerOn)
+            if (isOn)
             {
                 Port.EndCall();
                 return TerminalStatus.OperationSuccess;
             }
             else
             {
-                return TerminalStatus.PowerOff;
+                return Status;
             }
-        }
-
-        public TerminalStatus Answer()
-        {
-            throw new NotImplementedException();
         }
 
         public TerminalStatus PowerOn()
         {
             this.Status = TerminalStatus.PowerOn;
-            return TerminalStatus.PowerOn;
+            return Status;
         }
 
         public TerminalStatus PowerOff()
         {
             this.Status = TerminalStatus.PowerOff;
-            return TerminalStatus.PowerOff;
+            return Status;
         }
 
         public TerminalStatus AddPort(IPort port)
         {
-            if(Status == TerminalStatus.PowerOn)
+            if(isOn)
             {
                 if (port != null)
                 {
@@ -80,7 +102,7 @@ namespace Task3.Terminals.TerminalImplementation
             }
             else
             {
-                return TerminalStatus.PowerOff;
+                return Status;
             }
         }
 

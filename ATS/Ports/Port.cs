@@ -14,13 +14,16 @@ namespace Task3.ATS.Ports
 
         public event EventHandler<string> IncomingCall;
 
-        public event EventHandler CallEnded;
+        public event EventHandler<string> CallEnded;
+
 
         public Region Region { get; private set; }     
         public PortStatus Status { get; private set; }
         public string Number { get; private set; }
+        private string connectedNumber;
         public Port(Region region, string number)
         {
+            connectedNumber = "";
             this.Region = region;
             this.Number = number;
         }
@@ -35,6 +38,7 @@ namespace Task3.ATS.Ports
             if (Status != PortStatus.Busy)
             {
                 Status = PortStatus.Busy;
+                connectedNumber = number;
                 Call?.Invoke(this, number);
             }
         }
@@ -44,6 +48,7 @@ namespace Task3.ATS.Ports
             if(Status != PortStatus.Busy)
             {
                 Status = PortStatus.Busy;
+                connectedNumber = number;
                 IncomingCall?.Invoke(this, number);
             }
         }
@@ -53,8 +58,9 @@ namespace Task3.ATS.Ports
             if(Status != PortStatus.Online)
             {
                 Status = PortStatus.Online;
-                CallEnded?.Invoke(this, EventArgs.Empty);
+                CallEnded?.Invoke(this, connectedNumber);
             }
+            connectedNumber = "";
         }
 
     }

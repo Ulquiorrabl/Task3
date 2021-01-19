@@ -13,7 +13,6 @@ namespace Task3.ATS
     {
         private List<IPort> ports;
 
-        public int NumOfPorts { get { return ports.Count; } }
         public StationStatus Status { get; private set; }
         public Station()
         {
@@ -26,6 +25,7 @@ namespace Task3.ATS
             Port port = new Port(region, number);
             ports.Add(port);
             port.Call += ConnectPorts;
+            port.CallEnded += DisconnectPorts;
             return port;
         }
 
@@ -78,6 +78,15 @@ namespace Task3.ATS
             if (firstPortId != -1)
             {
                 ports[firstPortId].ConnectedToPort(sender.ToString());
+            }
+        }
+
+        void DisconnectPorts(object sender, string number)
+        {
+            int secondPortId = IndexOfPort(number);
+            if(secondPortId != -1)
+            {
+                ports[secondPortId].EndCall();
             }
         }
 

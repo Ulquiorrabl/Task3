@@ -13,7 +13,6 @@ namespace Task3.Terminals
         TerminalStatus Status { get; }
         TerminalStatus Call(string number);
         TerminalStatus Decline();
-        TerminalStatus Answer();
         TerminalStatus PowerOn();
         TerminalStatus PowerOff();
         TerminalStatus AddPort(IPort port);

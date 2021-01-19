@@ -22,6 +22,7 @@ namespace Task3.ATS.Ports
 
         event EventHandler<string> Call;
 
-        event EventHandler CallEnded;
+        event EventHandler<string> CallEnded;
+
     }
 }

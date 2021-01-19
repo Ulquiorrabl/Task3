@@ -34,6 +34,7 @@ namespace Task3.Billing.Accounts.AccountImplementation
             if (owner.Terminal.Port != null)
             {
                 owner.Terminal.Port.Call += OutGoingCall;
+                owner.Terminal.Port.IncomingCall += OnIncomingCall;
                 Status = AccountStatus.Activated;
                 return AccountStatus.Activated;
             }
@@ -64,6 +65,11 @@ namespace Task3.Billing.Accounts.AccountImplementation
             Balance -= cost;
             accountLog.AddLog("Call to " + number + " " + DateTime.Now);
             accountLog.AddLog("Call cost: " + cost.ToString() + "$" + " Account Balance: " + Balance.ToString() + "$");
+        }
+
+        void OnIncomingCall(object sender, string number)
+        {
+            accountLog.AddLog("Call from " + sender.ToString() + " " + DateTime.Now);
         }
     }
 }
