@@ -10,6 +10,7 @@ using Task3.ATS;
 using Task3.ATS.Regions;
 using Task3.Users.UserImplementation;
 using Task3.Billing.Accounts.AccountImplementation;
+using Task3.ATS.Ports;
 
 namespace Task3
 {
@@ -22,12 +23,14 @@ namespace Task3
             Terminal terminal1 = new Terminal();
             Terminal terminal2 = new Terminal();
 
+
             //Creating user 1
             Console.WriteLine("Creating user 1");
             User user1 = new User("Vladislav", "Ivanov", terminal1);
             Account acc1 = new Account(user1);
             acc1.AddFounds(15);
-            user1.Terminal.AddPort(stantion.GeneratePort(Region.Region1, "+375298005544"));
+            IPort port1 = stantion.GeneratePort(Region.Region1, "+375298005544");
+            user1.Terminal.AddPort(port1);
             Console.WriteLine(acc1.ActivateAccount());
             Console.WriteLine("");
 
@@ -36,10 +39,20 @@ namespace Task3
             User user2 = new User("Kirill", "Nekrasov", terminal2);
             Account acc2 = new Account(user2);
             acc2.AddFounds(27);
-            user2.Terminal.AddPort(stantion.GeneratePort(Region.Region2, "+375291234567"));
+            IPort port2 = stantion.GeneratePort(Region.Region1, "+375291234567");
+            user2.Terminal.AddPort(port2);
             Console.WriteLine(acc2.ActivateAccount());
             Console.WriteLine("");
 
+            //Adding and removing ports for user 2
+            Console.WriteLine("Adding and removing ports for user 2");
+            Console.WriteLine("Remove port");
+            Console.WriteLine(user2.Terminal.RemovePort());
+            Console.WriteLine("Add port");
+            Console.WriteLine(user2.Terminal.AddPort(port2));
+            Console.WriteLine("");
+
+            //Checking ATS Status
             Console.WriteLine("ATS Status:");
             Console.WriteLine(stantion.Status);
             Console.WriteLine("");
